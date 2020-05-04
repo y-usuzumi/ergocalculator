@@ -34,7 +34,7 @@ class ExprParser {
         private fun <T> peek(sr: PushbackReader, predicate: (Char?) -> T): T {
             var ch = sr.read()
             if (ch > -1) {
-                val result = predicate(ch as Char)
+                val result = predicate(ch.toChar())
                 sr.unread(ch)
                 return result
             }
@@ -42,7 +42,7 @@ class ExprParser {
         }
 
         @JvmStatic
-        private fun tokenize(input: String): List<Token> {
+        fun tokenize(input: String): List<Token> {
             val sr = PushbackReader(StringReader(input))
             var tokens = mutableListOf<Token>()
             loop@ while(true) {
@@ -50,7 +50,11 @@ class ExprParser {
                 when {
                     isEOF(ch) -> break@loop
                     isDigit(ch) -> {
-                        val token = Token.Num(readUntilNonNum(sr).joinToString())
+                        val token = Token.Num(readUntilNonNum(sr))
+                        tokens.add(token)
+                    }
+                    isOp(ch) -> {
+                        tokens.add(Token.Operator((sr.read().toChar()).toString()))
                     }
                 }
             }
@@ -59,15 +63,28 @@ class ExprParser {
         }
 
         @JvmStatic
-        private fun readUntilNonNum(sr: PushbackReader): List<Char> {
+        private fun readUntilNonNum(sr: PushbackReader): String {
             var pbsr = PushbackReader(sr)
+            val chars = mutableListOf<Char>()
             var ch = pbsr.read()
-            while (ch > -1) {
-                var ch = ch as Char
-                when (ch) {
-                    in '0'..'9', '.'
+            loop@while (true) {
+                if (ch == -1) {
+                    break
+                } else {
+                    val ch = ch.toChar()
+                    when (ch) {
+                        in '0'..'9', '.' -> {
+                            chars.add(ch)
+                        }
+                        else -> {
+                            pbsr.unread(ch as Int)
+                            break@loop
+                        }
+                    }
                 }
+
             }
+            return chars.joinToString()
         }
     }
 }

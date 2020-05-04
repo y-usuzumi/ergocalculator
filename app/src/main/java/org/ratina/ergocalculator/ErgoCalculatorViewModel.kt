@@ -1,5 +1,6 @@
 package org.ratina.ergocalculator
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -78,6 +79,8 @@ class ErgoCalculatorViewModel : ViewModel() {
     }
 
     private fun evaluate(): EvaluateResult {
+        val tokens = ExprParser.tokenize(expr.value ?: "")
+        Log.i("ErgoCalculatorViewModel", tokens.toString())
         return EvaluateResult.Success("OK")
     }
 }
