@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ErgoCalculator</string>
+    <string name="Clear" >Clear</string>
+    <string name="Div" >Div</string>
+    <string name="Mul" >Mul</string>
+    <string name="Del" >&lt;-</string>
+</resources>

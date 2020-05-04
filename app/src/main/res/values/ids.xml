@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="guideline_h1" type="id" />
+    <item name="guideline_v1" type="id" />
+    <item name="guideline_v2" type="id" />
+    <item name="guideline_v3" type="id" />
+    <item name="guideline_h2" type="id" />
+    <item name="guideline_h3" type="id" />
+    <item name="guideline_h4" type="id" />
+</resources>
